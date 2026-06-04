@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
 <style>
   :root{
     --navy:#282a73;
@@ -53,7 +54,7 @@
   .mast-inner{max-width:1240px;margin:0 auto;padding:34px 26px 40px;position:relative;z-index:2}
   .crest{display:flex;align-items:center;gap:14px;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:#c8caf2;font-weight:600}
   .crest .dot{width:30px;height:30px;border:1.5px solid var(--orange);border-radius:50%;display:grid;place-items:center;color:var(--orange);font-family:'Lora',serif;font-weight:700;font-size:.95rem}
-  h1.title{font-family:'Lora',serif;font-weight:700;font-size:2.45rem;line-height:1.12;margin-top:18px;max-width:24ch}
+  h1.title{font-family:'Lora',serif;font-weight:700;font-size:2.1rem;line-height:1.15;margin-top:18px;white-space:nowrap}
   h1.title em{color:var(--orange);font-style:normal}
   .sub{margin-top:14px;color:#d4d6f4;max-width:70ch;font-weight:300;font-size:1.02rem}
   .mast-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
@@ -177,6 +178,8 @@
   .alert-body b.neg{color:var(--coral)}
   .ow{color:var(--muted);font-size:.82rem;font-weight:500}
   .footnote{font-size:.8rem;color:var(--muted);font-style:italic;margin-top:16px;padding-left:2px}
+  .sec-tt h2,.panel h3,.rcard h4,.kpi .lab,.lscard .lim{text-wrap:balance}
+  .rcard li,.ow,.alert-body,.lim,.ms .t,.kpi .note,.tl-item .desc,.cap,.sub,.sec-tt p,.callout{text-wrap:pretty}
 
   footer{margin-top:60px;background:var(--navy-deep);color:#c8caf2;padding:30px 0;font-size:.82rem}
   footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
@@ -189,7 +192,7 @@
     .kpi-grid{grid-template-columns:repeat(2,1fr)}
     .g2,.g3,.g12{grid-template-columns:1fr}
     .road{grid-template-columns:1fr}
-    h1.title{font-size:1.95rem}
+    h1.title{font-size:1.5rem;white-space:normal}
   }
 </style>
 </head>
@@ -257,14 +260,14 @@
 
   <div class="grid g12 reveal" style="margin-top:20px">
     <div class="panel">
-      <h3>Mức độ hoàn thành hai chương trình trọng điểm</h3>
-      <div class="cap">So sánh tỷ lệ hoàn thành nhiệm vụ giữa hai trục công tác chính</div>
+      <h3>Mức độ hoàn thành hai chương trình trọng điểm</h3>
+      <div class="cap">So sánh tỷ lệ hoàn thành nhiệm vụ giữa hai trục công tác chính</div>
       <div class="gauge-row" id="overviewGauges"></div>
       <div class="callout">Hai chương trình đều ở vùng tiến độ tốt (&gt;80%), song <b>Bình dân học vụ số đi ngang</b> trong tháng — cần được ưu tiên rà soát trong tháng 6.</div>
     </div>
     <div class="panel">
       <h3>Diễn biến tiến độ theo tháng</h3>
-      <div class="cap">Tỷ lệ hoàn thành nhiệm vụ tháng 04 và tháng 05/2026</div>
+      <div class="cap">Tỷ lệ hoàn thành nhiệm vụ tháng 04 và tháng 05/2026</div>
       <div class="chart-box"><canvas id="ovTrend"></canvas></div>
     </div>
   </div>
@@ -288,8 +291,8 @@
             <th>Chưa hoàn<br>thành 2025</th>
             <th>Thường<br>xuyên</th>
             <th>Cần thực<br>hiện 2026</th>
-            <th>Hoàn thành<br>đến T04/2026</th>
-            <th>Hoàn thành<br>đến T05/2026</th>
+            <th>Hoàn thành<br>đến T04/2026</th>
+            <th>Hoàn thành<br>đến T05/2026</th>
             <th style="text-align:left;min-width:210px">Ghi chú</th>
           </tr>
         </thead>
@@ -303,7 +306,7 @@
             <td class="c">3</td>
             <td class="c">16/20 · 80%</td>
             <td class="c hl">17/20 · 85%</td>
-            <td>01 nhiệm vụ chưa hoàn thành 2025 do liên quan rà soát văn bản</td>
+            <td>01 nhiệm vụ chưa hoàn thành 2025 do liên quan rà soát văn bản</td>
           </tr>
           <tr>
             <td class="c">2</td>
@@ -341,7 +344,7 @@
           <tr>
             <td class="c">5</td>
             <td>Số hóa quy trình kê khai báo cáo tiến độ NQ 57 trên phần mềm QLKHCN</td>
-            <td class="m" colspan="7" style="font-size:.85rem">VNC đã triển khai báo cáo thực hiện NQ 57-NQ/TW đối với các đơn vị trên hệ thống phần mềm QLKHCN từ tháng 5/2025 và tiếp tục hoàn thiện bộ công cụ để tổng hợp và đo lường tiến độ triển khai.</td>
+            <td class="m" colspan="7" style="font-size:.85rem">VNC đã triển khai báo cáo thực hiện NQ 57-NQ/TW đối với các đơn vị trên hệ thống phần mềm QLKHCN từ tháng 5/2025 và tiếp tục hoàn thiện bộ công cụ để tổng hợp và đo lường tiến độ triển khai.</td>
           </tr>
         </tbody>
       </table>
@@ -359,7 +362,7 @@
       <div class="ls" style="margin-top:2px">
         <div class="lscard" style="border-left-color:var(--navy);padding:13px 16px;box-shadow:none"><div class="lim">Hai chương trình đo được đều vượt 80%; <b style="color:var(--navy)">NQ 114 tiến thêm 5 điểm</b>, Bình dân học vụ số đi ngang.</div></div>
         <div class="lscard" style="padding:13px 16px;box-shadow:none"><div class="lim"><b>40 nhiệm vụ CĐS 2026</b> — khối lớn nhất — chưa đo lường được do nền tảng đánh giá chưa hoàn thiện.</div></div>
-        <div class="lscard" style="padding:13px 16px;box-shadow:none"><div class="lim">Chỉ số sáng chế <b>vẫn ở mức 0</b> về hoàn thành — điểm rủi ro với mục tiêu của NQ 57.</div></div>
+        <div class="lscard" style="padding:13px 16px;box-shadow:none"><div class="lim">Chỉ số sáng chế <b>vẫn ở mức 0</b> về hoàn thành — điểm rủi ro với mục tiêu của NQ 57.</div></div>
       </div>
     </div>
   </div>
@@ -374,8 +377,8 @@
   <div class="rule"></div>
   <div class="grid g3 reveal">
     <div class="panel">
-      <h3>Tỷ lệ hoàn thành tổng thể</h3>
-      <div class="cap">17/20 nhiệm vụ đã hoàn thành</div>
+      <h3>Tỷ lệ hoàn thành tổng thể</h3>
+      <div class="cap">17/20 nhiệm vụ đã hoàn thành</div>
       <div class="gauge-row" id="pl1Gauge"></div>
     </div>
     <div class="panel">
@@ -384,7 +387,7 @@
       <div class="chart-box"><canvas id="pl1Donut"></canvas></div>
     </div>
     <div class="panel">
-      <h3>Xu hướng hoàn thành</h3>
+      <h3>Xu hướng hoàn thành</h3>
       <div class="cap">Diễn biến tháng 04 → tháng 05/2026</div>
       <div class="chart-box"><canvas id="pl1Trend"></canvas></div>
     </div>
@@ -396,7 +399,7 @@
       <div class="chart-box tall"><canvas id="pl1Stack"></canvas></div>
     </div>
   </div>
-  <div class="callout reveal"><b>Điểm nghẽn:</b> Nhiệm vụ 2.1 — Quy định Quỹ đầu tư mạo hiểm cho khởi nghiệp sáng tạo — chưa ban hành do đang rà soát lại với phòng Thanh tra – Pháp chế. Đây là nhiệm vụ duy nhất "chưa đạt" và là phần còn lại của 15% chưa hoàn thành.</div>
+  <div class="callout reveal"><b>Điểm nghẽn:</b> Nhiệm vụ 2.1 — Quy định Quỹ đầu tư mạo hiểm cho khởi nghiệp sáng tạo — chưa ban hành do đang rà soát lại với phòng Thanh tra – Pháp chế. Đây là nhiệm vụ duy nhất "chưa đạt" và là phần còn lại của 15% chưa hoàn thành.</div>
 </section>
 
 <!-- ================= PL2 ================= -->
@@ -408,8 +411,8 @@
   <div class="rule"></div>
   <div class="grid g3 reveal">
     <div class="panel">
-      <h3>Tỷ lệ hoàn thành tổng thể</h3>
-      <div class="cap">16/18 nhiệm vụ đã hoàn thành</div>
+      <h3>Tỷ lệ hoàn thành tổng thể</h3>
+      <div class="cap">16/18 nhiệm vụ đã hoàn thành</div>
       <div class="gauge-row" id="pl2Gauge"></div>
     </div>
     <div class="panel">
@@ -418,7 +421,7 @@
       <div class="chart-box"><canvas id="pl2Donut"></canvas></div>
     </div>
     <div class="panel">
-      <h3>Xu hướng hoàn thành</h3>
+      <h3>Xu hướng hoàn thành</h3>
       <div class="cap">Diễn biến tháng 04 → tháng 05/2026</div>
       <div class="chart-box"><canvas id="pl2Trend"></canvas></div>
     </div>
@@ -431,16 +434,16 @@
     </div>
     <div class="panel">
       <h3>Hai nhiệm vụ còn lại cần xử lý</h3>
-      <div class="cap">Chiếm 11,12% khối lượng chưa hoàn thành</div>
+      <div class="cap">Chiếm 11,12% khối lượng chưa hoàn thành</div>
       <div class="ls" style="margin-top:4px">
         <div class="lscard" style="padding:14px 16px;box-shadow:none">
           <div class="lim"><b>Trợ lý ảo NLP hỗ trợ học tập</b> — mới ở giai đoạn xây dựng kế hoạch trong khi thời hạn là 30/09/2026.</div>
         </div>
         <div class="lscard" style="padding:14px 16px;box-shadow:none">
-          <div class="lim"><b>Quy định trách nhiệm người đứng đầu &amp; mạng lưới "Đại sứ số"</b> — một nhiệm vụ đã dừng triển khai, mạng lưới hạt nhân số chưa hình thành.</div>
+          <div class="lim"><b>Quy định trách nhiệm người đứng đầu &amp; mạng lưới "Đại sứ số"</b> — một nhiệm vụ đã dừng triển khai, mạng lưới hạt nhân số chưa hình thành.</div>
         </div>
       </div>
-      <div class="callout">Tỷ lệ hoàn thành <b>đi ngang ở 88,88%</b> suốt hai tháng liên tiếp, phản ánh nhu cầu cần một cú hích về công cụ đo lường định lượng.</div>
+      <div class="callout">Tỷ lệ hoàn thành <b>đi ngang ở 88,88%</b> suốt hai tháng liên tiếp, phản ánh nhu cầu cần một cú hích về công cụ đo lường định lượng.</div>
     </div>
   </div>
 </section>
@@ -510,18 +513,18 @@
 <section id="pl5">
   <div class="sec-head reveal">
     <div class="sec-num">06</div>
-    <div class="sec-tt"><h2>Phụ lục 5 — Nhiệm vụ trọng điểm chuyển đổi số 2026</h2><p>20 đầu mối · khoảng 40 nhiệm vụ con · trải rộng trên 16 đơn vị</p></div>
+    <div class="sec-tt"><h2>Phụ lục 5 — Nhiệm vụ trọng điểm chuyển đổi số 2026</h2><p>20 đầu mối · khoảng 40 nhiệm vụ con · trải rộng trên 16 đơn vị</p></div>
   </div>
   <div class="rule"></div>
   <div class="grid g2 reveal">
     <div class="panel">
-      <h3>Khối lượng nhiệm vụ theo đơn vị chủ trì</h3>
-      <div class="cap">Phân bổ đầu mối công việc giữa các đơn vị</div>
+      <h3>Khối lượng nhiệm vụ theo đơn vị chủ trì</h3>
+      <div class="cap">Phân bổ đầu mối công việc giữa các đơn vị</div>
       <div class="chart-box tall"><canvas id="pl5Unit"></canvas></div>
     </div>
     <div class="panel">
       <h3>Áp lực tiến độ theo mốc thời hạn</h3>
-      <div class="cap">Số đầu mối nhiệm vụ phân theo thời hạn hoàn thành</div>
+      <div class="cap">Số đầu mối nhiệm vụ phân theo thời hạn hoàn thành</div>
       <div class="chart-box tall"><canvas id="pl5Time"></canvas></div>
       <div class="callout"><b>Khoảng trống dữ liệu:</b> 40 nhiệm vụ chưa được đo lường tiến độ do nền tảng số đánh giá chưa hoàn thiện. Một số mốc thời hạn trong báo cáo còn ghi sai (ví dụ "3/3036"), cần chuẩn hóa.</div>
     </div>
@@ -532,13 +535,13 @@
 <section id="denhan">
   <div class="sec-head reveal">
     <div class="sec-num">07</div>
-    <div class="sec-tt"><h2>Nhiệm vụ sắp đến hạn — Quý III/2026 (tháng 6, 7, 8)</h2><p>Nhắc các đơn vị hoàn thành đúng hạn và rà soát chỉ tiêu sáng chế / sáng kiến số</p></div>
+    <div class="sec-tt"><h2>Nhiệm vụ sắp đến hạn — Quý III/2026 (tháng 6, 7, 8)</h2><p>Nhắc các đơn vị hoàn thành đúng hạn và rà soát chỉ tiêu sáng chế / sáng kiến số</p></div>
   </div>
   <div class="rule"></div>
 
   <div class="alert-box reveal">
     <div class="alert-tag">Rà soát chỉ tiêu · Sáng chế &amp; Sáng kiến số</div>
-    <div class="alert-body">Chiếu theo mục tiêu Nghị quyết 57 (số đơn đăng ký tăng bình quân <b>16–18%/năm</b>; tỷ lệ khai thác thương mại <b>8–10%</b> đến năm 2030), kết quả hiện tại mới có <b>01 đơn đăng ký</b>, <b>01 bằng sáng chế SHTT</b> và <b>0 khai thác thương mại</b> — <b class="neg">CHƯA đạt chỉ tiêu tăng trưởng</b>. Đề nghị các đơn vị dồn lực 6 tháng cuối năm: rà soát kết quả nghiên cứu khoa học có tiềm năng bảo hộ, lập thêm hồ sơ đăng ký, thúc đẩy sáng kiến số tại từng đơn vị.</div>
+    <div class="alert-body">Chiếu theo mục tiêu Nghị quyết 57 (số đơn đăng ký tăng bình quân <b>16–18%/năm</b>; tỷ lệ khai thác thương mại <b>8–10%</b> đến năm 2030), kết quả hiện tại mới có <b>01 đơn đăng ký</b>, <b>01 bằng sáng chế SHTT</b> và <b>0 khai thác thương mại</b> — <b class="neg">CHƯA đạt chỉ tiêu tăng trưởng</b>. Đề nghị các đơn vị dồn lực 6 tháng cuối năm: rà soát kết quả nghiên cứu khoa học có tiềm năng bảo hộ, lập thêm hồ sơ đăng ký, thúc đẩy sáng kiến số tại từng đơn vị.</div>
   </div>
 
   <div class="grid g3 reveal" style="margin-top:20px">
@@ -550,7 +553,7 @@
         <li>Tối thiểu 02 sản phẩm truyền thông "Bình dân học vụ số" năm 2026 <span class="deadline-flag">Hạn 30/6</span> <span class="ow">· Phòng TCCB, TVTS &amp; PTTH</span></li>
         <li>Phòng truyền thống ảo, lịch thông minh, sơ đồ chỉ dẫn số <span class="deadline-flag">Hạn 6/2026</span> <span class="ow">· Văn phòng</span></li>
         <li>Trình ký dự thảo Quy định Quỹ đầu tư mạo hiểm (nhiệm vụ tồn 2.1) <span class="ow">· Phòng TC-KT, Pháp chế</span></li>
-        <li>Xử lý dứt điểm các nhiệm vụ PL5 đã quá hạn 2–4/2026 <span class="ow">· các đơn vị liên quan</span></li>
+        <li>Xử lý dứt điểm các nhiệm vụ PL5 đã quá hạn 2–4/2026 <span class="ow">· các đơn vị liên quan</span></li>
       </ul>
     </div>
     <div class="rcard">
@@ -571,7 +574,7 @@
       <ul>
         <li>Hoàn thiện &amp; vận hành nền tảng đo lường CĐS để mở dữ liệu 40 nhiệm vụ PL5 <span class="ow">· Phòng CNTT</span></li>
         <li>Hoàn tất thử nghiệm, chuẩn bị nghiệm thu Trợ lý ảo trước hạn 30/9 <span class="ow">· VNC</span></li>
-        <li>Hình thành mạng lưới "Đại sứ số / Hạt nhân số" cấp đơn vị <span class="ow">· Phòng TCCB</span></li>
+        <li>Hình thành mạng lưới "Đại sứ số / Hạt nhân số" cấp đơn vị <span class="ow">· Phòng TCCB</span></li>
         <li>Tiếp tục nộp hồ sơ đăng ký SHTT, hướng tới mục tiêu tăng trưởng NQ 57 <span class="ow">· VNC, các Khoa</span></li>
       </ul>
     </div>
@@ -609,11 +612,11 @@
     </div>
     <div class="rcard">
       <span class="pri">03</span>
-      <h4>Hoàn thành mốc Bình dân học vụ số <span class="deadline-flag">Hạn 30/6</span></h4>
+      <h4>Hoàn thành mốc Bình dân học vụ số <span class="deadline-flag">Hạn 30/6</span></h4>
       <div class="own">Chủ trì: <b>Phòng TCCB · TVTS &amp; PTTH</b></div>
       <ul>
         <li>Bảo đảm tối thiểu 02 sản phẩm truyền thông năm 2026 lên cổng NHNN/TBNH</li>
-        <li>Ban hành danh sách Đại sứ số cấp đơn vị</li>
+        <li>Ban hành danh sách Đại sứ số cấp đơn vị</li>
         <li>Khởi động cấu phần kỹ thuật Trợ lý ảo</li>
       </ul>
     </div>
@@ -642,9 +645,9 @@
       <h4>Về đích các nhiệm vụ CĐS hạn tháng 6 <span class="deadline-flag">Hạn 6/2026</span></h4>
       <div class="own">Chủ trì: <b>Văn phòng</b> · Phối hợp: Khoa CNTT &amp; KTS, TVTS</div>
       <ul>
-        <li>Hoàn thành phòng truyền thống ảo, lịch thông minh, sơ đồ chỉ dẫn</li>
+        <li>Hoàn thành phòng truyền thống ảo, lịch thông minh, sơ đồ chỉ dẫn</li>
         <li>Rà soát các mốc 2–4/2026 bị trễ, chuẩn hóa lại danh mục</li>
-        <li>Bổ sung đơn vị phối hợp cho các nhiệm vụ còn thiếu</li>
+        <li>Bổ sung đơn vị phối hợp cho các nhiệm vụ còn thiếu</li>
       </ul>
     </div>
   </div>
@@ -687,6 +690,8 @@ Chart.defaults.color=MUTED;
 Chart.defaults.plugins.legend.labels.usePointStyle=true;
 Chart.defaults.plugins.legend.labels.boxWidth=8;
 Chart.defaults.plugins.legend.labels.padding=14;
+if(window.ChartDataLabels){Chart.register(ChartDataLabels);}
+Chart.defaults.set('plugins.datalabels',{color:NAVY,font:{weight:'700',size:11},anchor:'end',align:'end',offset:3,clamp:true,formatter:(v)=>String(v).replace('.',',')});
 
 function init(){
   /* Overview gauges */
@@ -705,7 +710,7 @@ function init(){
   gauge(document.getElementById('pl1Gauge'),85,'Hoàn thành','Kỳ tháng 05/2026',NAVY);
   new Chart(pl1Donut,{type:'doughnut',data:{labels:['Đã hoàn thành','Chưa hoàn thành'],
     datasets:[{data:[17,3],backgroundColor:[NAVY,GREY],borderWidth:0}]},
-    options:{maintainAspectRatio:false,cutout:'66%',plugins:{legend:{position:'bottom'}}}});
+    options:{maintainAspectRatio:false,cutout:'60%',plugins:{legend:{position:'bottom'},datalabels:{anchor:'center',align:'center',offset:0,color:(c)=>c.dataIndex===0?'#fff':'#23253f',font:{weight:'700',size:13},formatter:(v,ctx)=>{const d=ctx.chart.data.datasets[0].data;const t=d.reduce((a,b)=>a+b,0);return v+'\n('+Math.round(v/t*100)+'%)';},textAlign:'center'}}}});
   new Chart(pl1Trend,{type:'line',data:{labels:['T04/2026','T05/2026'],
     datasets:[{data:[80,85],borderColor:ORANGE,backgroundColor:'rgba(250,166,26,.12)',fill:true,tension:.3,borderWidth:3,pointRadius:5,pointBackgroundColor:ORANGE}]},
     options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:70,max:100,ticks:{callback:v=>v+'%'},grid:{color:LINE}},x:{grid:{display:false}}}}});
@@ -716,13 +721,13 @@ function init(){
       {label:'Đang triển khai',data:[0,0,0,0,1],backgroundColor:ORANGE,borderRadius:5,stack:'s'},
       {label:'Chưa đạt',data:[0,1,0,0,0],backgroundColor:CORAL,borderRadius:5,stack:'s'}
     ]},
-    options:{maintainAspectRatio:false,scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,ticks:{stepSize:1},grid:{color:LINE}}},plugins:{legend:{position:'bottom'}}}});
+    options:{maintainAspectRatio:false,scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,ticks:{stepSize:1},grid:{color:LINE}}},plugins:{legend:{position:'bottom'},datalabels:{anchor:'center',align:'center',color:'#fff',font:{weight:'700',size:11},formatter:(v)=>v>0?v:''}}}});
 
   /* PL2 */
   gauge(document.getElementById('pl2Gauge'),88.88,'Hoàn thành','Kỳ tháng 05/2026',ORANGE);
   new Chart(pl2Donut,{type:'doughnut',data:{labels:['Đã hoàn thành','Chưa hoàn thành'],
     datasets:[{data:[16,2],backgroundColor:[ORANGE,GREY],borderWidth:0}]},
-    options:{maintainAspectRatio:false,cutout:'66%',plugins:{legend:{position:'bottom'}}}});
+    options:{maintainAspectRatio:false,cutout:'60%',plugins:{legend:{position:'bottom'},datalabels:{anchor:'center',align:'center',offset:0,color:(c)=>c.dataIndex===0?'#fff':'#23253f',font:{weight:'700',size:13},formatter:(v,ctx)=>{const d=ctx.chart.data.datasets[0].data;const t=d.reduce((a,b)=>a+b,0);return v+'\n('+Math.round(v/t*100)+'%)';},textAlign:'center'}}}});
   new Chart(pl2Trend,{type:'line',data:{labels:['T04/2026','T05/2026'],
     datasets:[{data:[88.88,88.88],borderColor:CORAL,backgroundColor:'rgba(216,90,48,.10)',fill:true,tension:.2,borderWidth:3,pointRadius:5,pointBackgroundColor:CORAL}]},
     options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:70,max:100,ticks:{callback:v=>v+'%'},grid:{color:LINE}},x:{grid:{display:false}}}}});
