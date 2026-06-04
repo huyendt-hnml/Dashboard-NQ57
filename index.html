@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard tiến độ Nghị quyết 57-NQ/TW — Học viện Ngân hàng | Tháng 05/2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root{
+    --navy:#282a73;
+    --navy-deep:#1c1e54;
+    --navy-soft:#3a3d8f;
+    --orange:#faa61a;
+    --coral:#D85A30;
+    --paper:#f4f1ea;
+    --paper-2:#ece7db;
+    --card:#ffffff;
+    --ink:#23253f;
+    --muted:#6b6e85;
+    --line:#e2ddd0;
+    --grey-bar:#c9c6d6;
+    --shadow:0 1px 2px rgba(40,42,115,.05),0 8px 30px rgba(40,42,115,.07);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Be Vietnam Pro',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(circle at 12% 8%, rgba(40,42,115,.05), transparent 38%),
+      radial-gradient(circle at 88% 0%, rgba(250,166,26,.06), transparent 34%);
+  }
+  .wrap{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:0 26px}
+
+  /* ===== HEADER ===== */
+  header.masthead{
+    background:linear-gradient(135deg,var(--navy-deep) 0%,var(--navy) 55%,var(--navy-soft) 130%);
+    color:#fff;position:relative;overflow:hidden;
+  }
+  header.masthead::after{
+    content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle,rgba(250,166,26,.20),transparent 65%);
+  }
+  .mast-inner{max-width:1240px;margin:0 auto;padding:34px 26px 40px;position:relative;z-index:2}
+  .crest{display:flex;align-items:center;gap:14px;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:#c8caf2;font-weight:600}
+  .crest .dot{width:30px;height:30px;border:1.5px solid var(--orange);border-radius:50%;display:grid;place-items:center;color:var(--orange);font-family:'Lora',serif;font-weight:700;font-size:.95rem}
+  h1.title{font-family:'Lora',serif;font-weight:700;font-size:2.45rem;line-height:1.12;margin-top:18px;max-width:24ch}
+  h1.title em{color:var(--orange);font-style:normal}
+  .sub{margin-top:14px;color:#d4d6f4;max-width:70ch;font-weight:300;font-size:1.02rem}
+  .mast-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);padding:7px 15px;border-radius:30px;font-size:.82rem;font-weight:500;backdrop-filter:blur(4px)}
+  .chip b{color:var(--orange);font-weight:700}
+
+  /* ===== NAV ===== */
+  nav.bar{position:sticky;top:0;z-index:30;background:rgba(28,30,84,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
+  .nav-inner{max-width:1240px;margin:0 auto;padding:0 14px;display:flex;gap:2px;overflow-x:auto}
+  nav.bar a{white-space:nowrap;color:#c8caf2;text-decoration:none;font-size:.82rem;font-weight:600;padding:14px 14px;border-bottom:2.5px solid transparent;transition:.2s}
+  nav.bar a:hover{color:#fff}
+  nav.bar a.active{color:var(--orange);border-color:var(--orange)}
+
+  /* ===== SECTIONS ===== */
+  section{padding:54px 0 10px}
+  .sec-head{display:flex;align-items:flex-end;gap:16px;margin-bottom:26px}
+  .sec-num{font-family:'Lora',serif;font-size:2.6rem;font-weight:700;color:var(--navy);opacity:.22;line-height:1}
+  .sec-tt h2{font-family:'Lora',serif;font-size:1.62rem;color:var(--navy);font-weight:700;line-height:1.18}
+  .sec-tt p{color:var(--muted);font-size:.92rem;margin-top:3px}
+  .rule{height:3px;width:64px;background:var(--orange);border-radius:3px;margin:0 0 26px}
+
+  /* ===== KPI CARDS ===== */
+  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .kpi{background:linear-gradient(150deg,var(--navy) 0%,var(--navy-soft) 130%);color:#fff;border-radius:16px;padding:22px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+  .kpi::after{content:"";position:absolute;right:-30px;bottom:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(250,166,26,.16),transparent 70%)}
+  .kpi .lab{font-size:.78rem;color:#c8caf2;font-weight:500;letter-spacing:.02em;min-height:2.5em}
+  .kpi .big{font-family:'Lora',serif;font-weight:700;font-size:2.5rem;color:var(--orange);line-height:1;margin:10px 0 4px}
+  .kpi .note{font-size:.78rem;color:#d4d6f4}
+  .kpi.done .big{color:#ffae8a}
+
+  /* ===== PANELS ===== */
+  .grid{display:grid;gap:20px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:1.15fr 1fr 1fr}
+  .g12{grid-template-columns:1.4fr 1fr}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 22px 18px;box-shadow:var(--shadow)}
+  .panel h3{font-size:1.02rem;color:var(--navy);font-weight:700;margin-bottom:2px}
+  .panel .cap{font-size:.82rem;color:var(--muted);margin-bottom:16px}
+  .chart-box{position:relative;height:230px}
+  .chart-box.tall{height:300px}
+
+  /* ===== GAUGE ===== */
+  .gauge-row{display:flex;gap:26px;flex-wrap:wrap;justify-content:center}
+  .gauge{text-align:center;flex:1;min-width:150px}
+  .gauge svg{width:160px;height:160px}
+  .gauge .pct{font-family:'Lora',serif;font-weight:700;font-size:1.9rem;fill:var(--navy)}
+  .gauge .glab{font-size:.85rem;color:var(--ink);font-weight:600;margin-top:4px}
+  .gauge .gsub{font-size:.76rem;color:var(--muted)}
+
+  /* mini stat */
+  .ministat{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .ms{border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;background:var(--paper)}
+  .ms .n{font-family:'Lora',serif;font-weight:700;font-size:1.85rem;color:var(--orange);line-height:1}
+  .ms .n.zero{color:var(--muted)}
+  .ms .t{font-size:.76rem;color:var(--muted);margin-top:5px;min-height:2.4em}
+
+  /* timeline */
+  .tl{position:relative;padding-left:30px}
+  .tl::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:var(--line)}
+  .tl-item{position:relative;padding:0 0 22px 0}
+  .tl-item::before{content:"";position:absolute;left:-25px;top:4px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--navy)}
+  .tl-item.now::before{border-color:var(--orange);box-shadow:0 0 0 4px rgba(250,166,26,.18)}
+  .tl-item.done::before{background:var(--coral);border-color:var(--coral)}
+  .tl-item .when{font-size:.74rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--orange)}
+  .tl-item .what{font-weight:600;color:var(--navy);font-size:.96rem;margin-top:1px}
+  .tl-item .desc{font-size:.85rem;color:var(--muted)}
+
+  /* platform badges */
+  .plats{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+  .plat{flex:1;min-width:120px;border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;background:var(--paper)}
+  .plat .pi{width:38px;height:38px;border-radius:10px;background:var(--navy);color:var(--orange);display:grid;place-items:center;margin:0 auto 8px;font-weight:700;font-family:'Lora',serif}
+  .plat .pn{font-weight:600;font-size:.86rem;color:var(--navy)}
+  .plat .pstat{font-size:.74rem;color:var(--coral);font-weight:600;margin-top:2px}
+
+  /* limitation / solution table */
+  .ls{display:grid;gap:14px}
+  .lscard{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--coral);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow)}
+  .lscard .area{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);background:var(--paper-2);display:inline-block;padding:3px 10px;border-radius:20px;margin-bottom:8px}
+  .lscard .lim{font-weight:600;color:var(--ink);font-size:.96rem}
+  .lscard .lim b{color:var(--coral)}
+  .lscard .sol{font-size:.9rem;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+  .lscard .sol strong{color:var(--orange);font-weight:700}
+
+  /* roadmap */
+  .road{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .rcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow);position:relative}
+  .rcard .pri{position:absolute;top:16px;right:16px;font-family:'Lora',serif;font-weight:700;font-size:1.6rem;color:var(--orange);opacity:.4}
+  .rcard h4{color:var(--navy);font-size:1rem;font-weight:700;padding-right:34px}
+  .rcard .own{font-size:.76rem;color:var(--muted);margin:4px 0 10px}
+  .rcard .own b{color:var(--navy);font-weight:600}
+  .rcard ul{list-style:none;display:grid;gap:7px}
+  .rcard li{font-size:.87rem;color:var(--ink);padding-left:18px;position:relative}
+  .rcard li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;background:var(--orange);border-radius:2px;transform:rotate(45deg)}
+  .deadline-flag{display:inline-block;font-size:.72rem;font-weight:700;color:#fff;background:var(--coral);padding:2px 9px;border-radius:20px;margin-left:6px}
+
+  /* legend chips */
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:.8rem;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+  .callout{background:linear-gradient(135deg,rgba(216,90,48,.07),rgba(250,166,26,.07));border:1px solid rgba(216,90,48,.25);border-radius:12px;padding:14px 16px;font-size:.87rem;color:var(--ink);margin-top:14px}
+  .callout b{color:var(--coral)}
+
+  /* report table */
+  .table-scroll{overflow-x:auto;border-radius:12px}
+  .rtable{width:100%;border-collapse:collapse;font-size:.86rem;min-width:780px}
+  .rtable th{background:var(--navy);color:#fff;font-weight:600;font-size:.77rem;line-height:1.25;padding:11px 10px;text-align:center;vertical-align:middle;border:1px solid var(--navy-soft)}
+  .rtable td{padding:11px 12px;border:1px solid var(--line);vertical-align:top;color:var(--ink)}
+  .rtable tbody tr:nth-child(even){background:var(--paper)}
+  .rtable td.c{text-align:center;vertical-align:middle}
+  .rtable td.b{font-weight:700;color:var(--navy)}
+  .rtable td.hl{font-weight:700;color:var(--orange);background:rgba(250,166,26,.10)}
+  .rtable td.warn{font-weight:700;color:var(--coral)}
+  .rtable td.m{color:var(--muted)}
+
+  /* deadline reminder block */
+  .alert-box{background:linear-gradient(135deg,rgba(216,90,48,.10),rgba(250,166,26,.10));border:1px solid rgba(216,90,48,.35);border-left:5px solid var(--coral);border-radius:14px;padding:18px 22px;box-shadow:var(--shadow)}
+  .alert-tag{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--coral);margin-bottom:8px}
+  .alert-body{font-size:.95rem;color:var(--ink);line-height:1.65}
+  .alert-body b{color:var(--navy);font-weight:700}
+  .alert-body b.neg{color:var(--coral)}
+  .ow{color:var(--muted);font-size:.82rem;font-weight:500}
+  .footnote{font-size:.8rem;color:var(--muted);font-style:italic;margin-top:16px;padding-left:2px}
+
+  footer{margin-top:60px;background:var(--navy-deep);color:#c8caf2;padding:30px 0;font-size:.82rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  footer b{color:#fff}
+
+  .reveal{opacity:0;transform:translateY(14px);transition:.6s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:980px){
+    .kpi-grid{grid-template-columns:repeat(2,1fr)}
+    .g2,.g3,.g12{grid-template-columns:1fr}
+    .road{grid-template-columns:1fr}
+    h1.title{font-size:1.95rem}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="mast-inner">
+    <div class="crest"><span class="dot">57</span> Học viện Ngân hàng · Ban chỉ đạo phát triển KHCN, ĐMST &amp; CĐS</div>
+    <h1 class="title">Báo cáo tiến độ thực hiện <em>Nghị quyết</em> tháng 05/2026</h1>
+    <p class="sub">Hệ thống giám sát trực quan kết quả thực hiện các nhiệm vụ khoa học công nghệ, đổi mới sáng tạo và chuyển đổi số — tổng hợp theo Báo cáo số 06/BC-BCĐ ngày 28/5/2026.</p>
+    <div class="mast-meta">
+      <span class="chip">Kỳ báo cáo: <b>Tháng 05/2026</b></span>
+      <span class="chip">Tổng nhiệm vụ giám sát: <b>78+</b></span>
+      <span class="chip">NQ 114: <b>85%</b></span>
+      <span class="chip">Bình dân học vụ số: <b>88,88%</b></span>
+    </div>
+  </div>
+</header>
+
+<nav class="bar">
+  <div class="nav-inner" id="navinner">
+    <a href="#tongquan" class="active">Tổng quan</a>
+    <a href="#baocao">Báo cáo tổng hợp</a>
+    <a href="#pl1">PL1 · NQ 114</a>
+    <a href="#pl2">PL2 · Bình dân học vụ số</a>
+    <a href="#pl3">PL3 · Sáng chế</a>
+    <a href="#pl4">PL4 · AI Chatbot</a>
+    <a href="#pl5">PL5 · CĐS 2026</a>
+    <a href="#denhan">Nhiệm vụ đến hạn</a>
+    <a href="#lotrinh">Lộ trình 6/2026</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- ================= TỔNG QUAN ================= -->
+<section id="tongquan">
+  <div class="sec-head reveal">
+    <div class="sec-num">00</div>
+    <div class="sec-tt"><h2>Báo cáo tiến độ triển khai Nghị quyết 57-NQ/TW (tháng 05/2026)</h2><p>Bức tranh tiến độ toàn cảnh tại thời điểm tháng 05/2026</p></div>
+  </div>
+
+  <div class="kpi-grid reveal">
+    <div class="kpi">
+      <div class="lab">Nghị quyết 114/NQ-HĐHV (triển khai QĐ 2223)</div>
+      <div class="big">85%</div>
+      <div class="note">17/20 nhiệm vụ · tăng 5 điểm so với T4</div>
+    </div>
+    <div class="kpi">
+      <div class="lab">Phong trào "Bình dân học vụ số"</div>
+      <div class="big">88,88%</div>
+      <div class="note">16/18 nhiệm vụ · đi ngang so với T4</div>
+    </div>
+    <div class="kpi">
+      <div class="lab">Chỉ số sáng chế (lũy kế)</div>
+      <div class="big">01</div>
+      <div class="note">01 đơn đăng ký · 0 khai thác thương mại</div>
+    </div>
+    <div class="kpi done">
+      <div class="lab">Nhiệm vụ trọng tâm CĐS năm 2026</div>
+      <div class="big">40</div>
+      <div class="note">20 đầu mối · chờ nền tảng đo lường</div>
+    </div>
+  </div>
+
+  <div class="grid g12 reveal" style="margin-top:20px">
+    <div class="panel">
+      <h3>Mức độ hoàn thành hai chương trình trọng điểm</h3>
+      <div class="cap">So sánh tỷ lệ hoàn thành nhiệm vụ giữa hai trục công tác chính</div>
+      <div class="gauge-row" id="overviewGauges"></div>
+      <div class="callout">Hai chương trình đều ở vùng tiến độ tốt (&gt;80%), song <b>Bình dân học vụ số đi ngang</b> trong tháng — cần được ưu tiên rà soát trong tháng 6.</div>
+    </div>
+    <div class="panel">
+      <h3>Diễn biến tiến độ theo tháng</h3>
+      <div class="cap">Tỷ lệ hoàn thành nhiệm vụ tháng 04 và tháng 05/2026</div>
+      <div class="chart-box"><canvas id="ovTrend"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BÁO CÁO TỔNG HỢP ================= -->
+<section id="baocao">
+  <div class="sec-head reveal">
+    <div class="sec-num">01</div>
+    <div class="sec-tt"><h2>Báo cáo tiến độ triển khai thực hiện Nghị quyết 57-NQ/TW</h2><p>Bảng tổng hợp kết quả các trục công tác — kỳ tháng 05/2026 (Báo cáo số 06/BC-BCĐ)</p></div>
+  </div>
+  <div class="rule"></div>
+  <div class="panel reveal" style="padding-bottom:10px">
+    <div class="table-scroll">
+      <table class="rtable">
+        <thead>
+          <tr>
+            <th>TT</th>
+            <th style="text-align:left;min-width:240px">Nội dung báo cáo</th>
+            <th>Số lượng<br>nhiệm vụ</th>
+            <th>Chưa hoàn<br>thành 2025</th>
+            <th>Thường<br>xuyên</th>
+            <th>Cần thực<br>hiện 2026</th>
+            <th>Hoàn thành<br>đến T04/2026</th>
+            <th>Hoàn thành<br>đến T05/2026</th>
+            <th style="text-align:left;min-width:210px">Ghi chú</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="c">1</td>
+            <td>Nghị quyết 114/NQ-HĐHV — triển khai Quyết định 2223/QĐ-NHNN của Thống đốc NHNN</td>
+            <td class="c b">20</td>
+            <td class="c">0</td>
+            <td class="c">7</td>
+            <td class="c">3</td>
+            <td class="c">16/20 · 80%</td>
+            <td class="c hl">17/20 · 85%</td>
+            <td>01 nhiệm vụ chưa hoàn thành 2025 do liên quan rà soát văn bản</td>
+          </tr>
+          <tr>
+            <td class="c">2</td>
+            <td>Quyết định 2069/QĐ-HVNH — Phong trào "Bình dân học vụ số"</td>
+            <td class="c b">18</td>
+            <td class="c">0</td>
+            <td class="c">5</td>
+            <td class="c">3</td>
+            <td class="c">16/18 · 88,88%</td>
+            <td class="c hl">16/18 · 88,88%</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td class="c">3</td>
+            <td>Các nhiệm vụ trọng tâm về chuyển đổi số của HVNH năm 2026</td>
+            <td class="c b">40</td>
+            <td class="c m">—</td>
+            <td class="c m">—</td>
+            <td class="c">40</td>
+            <td class="c m">—</td>
+            <td class="c m">chờ đo lường</td>
+            <td>Theo Kết luận họp CĐS ngày 23/1/2026; báo cáo tiến độ khi hoàn thiện nền tảng số đánh giá nhiệm vụ CĐS</td>
+          </tr>
+          <tr>
+            <td class="c">4</td>
+            <td>Chỉ số mục tiêu về sáng chế theo Nghị quyết 57-NQ/TW</td>
+            <td class="c b">&gt;1</td>
+            <td class="c">0</td>
+            <td class="c">1</td>
+            <td class="c">&gt;1</td>
+            <td class="c warn">0</td>
+            <td class="c warn">0</td>
+            <td>Cần đẩy mạnh hơn nữa việc đăng ký sở hữu trí tuệ và sáng chế của HVNH</td>
+          </tr>
+          <tr>
+            <td class="c">5</td>
+            <td>Số hóa quy trình kê khai báo cáo tiến độ NQ 57 trên phần mềm QLKHCN</td>
+            <td class="m" colspan="7" style="font-size:.85rem">VNC đã triển khai báo cáo thực hiện NQ 57-NQ/TW đối với các đơn vị trên hệ thống phần mềm QLKHCN từ tháng 5/2025 và tiếp tục hoàn thiện bộ công cụ để tổng hợp và đo lường tiến độ triển khai.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="grid g12 reveal" style="margin-top:20px">
+    <div class="panel">
+      <h3>Cơ cấu khối lượng nhiệm vụ giám sát theo nhóm nội dung</h3>
+      <div class="cap">Khoảng 79 nhiệm vụ phân bổ trên bốn trục công tác chính</div>
+      <div class="chart-box"><canvas id="baocaoComp"></canvas></div>
+    </div>
+    <div class="panel">
+      <h3>Đọc nhanh bức tranh tổng hợp</h3>
+      <div class="cap">Bốn điểm cốt lõi rút ra từ bảng báo cáo</div>
+      <div class="ls" style="margin-top:2px">
+        <div class="lscard" style="border-left-color:var(--navy);padding:13px 16px;box-shadow:none"><div class="lim">Hai chương trình đo được đều vượt 80%; <b style="color:var(--navy)">NQ 114 tiến thêm 5 điểm</b>, Bình dân học vụ số đi ngang.</div></div>
+        <div class="lscard" style="padding:13px 16px;box-shadow:none"><div class="lim"><b>40 nhiệm vụ CĐS 2026</b> — khối lớn nhất — chưa đo lường được do nền tảng đánh giá chưa hoàn thiện.</div></div>
+        <div class="lscard" style="padding:13px 16px;box-shadow:none"><div class="lim">Chỉ số sáng chế <b>vẫn ở mức 0</b> về hoàn thành — điểm rủi ro với mục tiêu của NQ 57.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PL1 ================= -->
+<section id="pl1">
+  <div class="sec-head reveal">
+    <div class="sec-num">02</div>
+    <div class="sec-tt"><h2>Phụ lục 1 — Kết quả thực hiện Nghị quyết 114/NQ-HĐHV</h2><p>Triển khai Quyết định 2223/QĐ-NHNN của Thống đốc NHNN · 20 nhiệm vụ trên 5 nhóm nội dung</p></div>
+  </div>
+  <div class="rule"></div>
+  <div class="grid g3 reveal">
+    <div class="panel">
+      <h3>Tỷ lệ hoàn thành tổng thể</h3>
+      <div class="cap">17/20 nhiệm vụ đã hoàn thành</div>
+      <div class="gauge-row" id="pl1Gauge"></div>
+    </div>
+    <div class="panel">
+      <h3>Cơ cấu trạng thái nhiệm vụ</h3>
+      <div class="cap">Phân loại 20 nhiệm vụ theo tình hình thực hiện</div>
+      <div class="chart-box"><canvas id="pl1Donut"></canvas></div>
+    </div>
+    <div class="panel">
+      <h3>Xu hướng hoàn thành</h3>
+      <div class="cap">Diễn biến tháng 04 → tháng 05/2026</div>
+      <div class="chart-box"><canvas id="pl1Trend"></canvas></div>
+    </div>
+  </div>
+  <div class="grid reveal" style="margin-top:20px">
+    <div class="panel">
+      <h3>Trạng thái theo 5 nhóm nội dung trọng tâm (I–V)</h3>
+      <div class="cap">Đối chiếu nhiệm vụ đã đạt, đang triển khai và chưa đạt trên từng nhóm</div>
+      <div class="chart-box tall"><canvas id="pl1Stack"></canvas></div>
+    </div>
+  </div>
+  <div class="callout reveal"><b>Điểm nghẽn:</b> Nhiệm vụ 2.1 — Quy định Quỹ đầu tư mạo hiểm cho khởi nghiệp sáng tạo — chưa ban hành do đang rà soát lại với phòng Thanh tra – Pháp chế. Đây là nhiệm vụ duy nhất "chưa đạt" và là phần còn lại của 15% chưa hoàn thành.</div>
+</section>
+
+<!-- ================= PL2 ================= -->
+<section id="pl2">
+  <div class="sec-head reveal">
+    <div class="sec-num">03</div>
+    <div class="sec-tt"><h2>Phụ lục 2 — Phong trào "Bình dân học vụ số"</h2><p>Triển khai Quyết định 2069/QĐ-HVNH · 18 nhiệm vụ trên 6 nhóm nội dung</p></div>
+  </div>
+  <div class="rule"></div>
+  <div class="grid g3 reveal">
+    <div class="panel">
+      <h3>Tỷ lệ hoàn thành tổng thể</h3>
+      <div class="cap">16/18 nhiệm vụ đã hoàn thành</div>
+      <div class="gauge-row" id="pl2Gauge"></div>
+    </div>
+    <div class="panel">
+      <h3>Cơ cấu trạng thái nhiệm vụ</h3>
+      <div class="cap">Phân loại 18 nhiệm vụ theo tình hình thực hiện</div>
+      <div class="chart-box"><canvas id="pl2Donut"></canvas></div>
+    </div>
+    <div class="panel">
+      <h3>Xu hướng hoàn thành</h3>
+      <div class="cap">Diễn biến tháng 04 → tháng 05/2026</div>
+      <div class="chart-box"><canvas id="pl2Trend"></canvas></div>
+    </div>
+  </div>
+  <div class="grid g2 reveal" style="margin-top:20px">
+    <div class="panel">
+      <h3>Phân bố nhiệm vụ theo nhóm nội dung (I–VI)</h3>
+      <div class="cap">Số lượng nhiệm vụ được giao trên từng trục công tác</div>
+      <div class="chart-box"><canvas id="pl2Bar"></canvas></div>
+    </div>
+    <div class="panel">
+      <h3>Hai nhiệm vụ còn lại cần xử lý</h3>
+      <div class="cap">Chiếm 11,12% khối lượng chưa hoàn thành</div>
+      <div class="ls" style="margin-top:4px">
+        <div class="lscard" style="padding:14px 16px;box-shadow:none">
+          <div class="lim"><b>Trợ lý ảo NLP hỗ trợ học tập</b> — mới ở giai đoạn xây dựng kế hoạch trong khi thời hạn là 30/09/2026.</div>
+        </div>
+        <div class="lscard" style="padding:14px 16px;box-shadow:none">
+          <div class="lim"><b>Quy định trách nhiệm người đứng đầu &amp; mạng lưới "Đại sứ số"</b> — một nhiệm vụ đã dừng triển khai, mạng lưới hạt nhân số chưa hình thành.</div>
+        </div>
+      </div>
+      <div class="callout">Tỷ lệ hoàn thành <b>đi ngang ở 88,88%</b> suốt hai tháng liên tiếp, phản ánh nhu cầu cần một cú hích về công cụ đo lường định lượng.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PL3 ================= -->
+<section id="pl3">
+  <div class="sec-head reveal">
+    <div class="sec-num">04</div>
+    <div class="sec-tt"><h2>Phụ lục 3 — Chỉ số mục tiêu về sáng chế</h2><p>Đối chiếu hiện trạng với mục tiêu Nghị quyết 57-NQ/TW đến năm 2030</p></div>
+  </div>
+  <div class="rule"></div>
+  <div class="grid g12 reveal">
+    <div class="panel">
+      <h3>Hiện trạng xác lập quyền sở hữu trí tuệ</h3>
+      <div class="cap">Số liệu lũy kế tính đến tháng 05/2026</div>
+      <div class="ministat">
+        <div class="ms"><div class="n">1</div><div class="t">Đơn đăng ký sáng chế đã nộp</div></div>
+        <div class="ms"><div class="n">1</div><div class="t">Bằng sáng chế SHTT (đã cấp)</div></div>
+        <div class="ms"><div class="n zero">0</div><div class="t">Bằng độc quyền GPHI</div></div>
+        <div class="ms"><div class="n zero">0</div><div class="t">Sáng chế khai thác thương mại</div></div>
+      </div>
+      <div class="callout"><b>Cảnh báo mục tiêu:</b> NQ 57 yêu cầu số đơn đăng ký tăng bình quân 16–18%/năm và tỷ lệ khai thác thương mại đạt 8–10% đến 2030. Tỷ lệ khai thác hiện ở mức 0%.</div>
+    </div>
+    <div class="panel">
+      <h3>Phễu chuyển hóa hồ sơ sáng chế</h3>
+      <div class="cap">Mức độ thu hẹp qua từng bước xác lập quyền</div>
+      <div class="chart-box tall"><canvas id="pl3Funnel"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PL4 ================= -->
+<section id="pl4">
+  <div class="sec-head reveal">
+    <div class="sec-num">05</div>
+    <div class="sec-tt"><h2>Phụ lục 4 — Mô hình AI Chatbot</h2><p>Tiến trình phát triển trợ lý ảo phục vụ người học và cán bộ HVNH</p></div>
+  </div>
+  <div class="rule"></div>
+  <div class="grid g2 reveal">
+    <div class="panel">
+      <h3>Lộ trình phát triển sản phẩm</h3>
+      <div class="cap">Các mốc tiến hóa của mô hình tính đến tháng 05/2026</div>
+      <div class="tl" style="margin-top:8px">
+        <div class="tl-item done"><div class="when">Giai đoạn 1</div><div class="what">Phiên bản VER1</div><div class="desc">Thử nghiệm ban đầu, độ chính xác ghi nhận khoảng 70%.</div></div>
+        <div class="tl-item now"><div class="when">Tháng 04–05/2026</div><div class="what">VER2 chạy thử nghiệm đa nền tảng</div><div class="desc">Cải thiện độ chính xác và xử lý hạn chế kỹ thuật cùng đối tác Misa.</div></div>
+        <div class="tl-item"><div class="when">Kế hoạch tiếp theo</div><div class="what">Đưa VER2 vào vận hành chính thức</div><div class="desc">Chuyển từ thử nghiệm sang khai thác chính thức.</div></div>
+        <div class="tl-item"><div class="when">Song hành</div><div class="what">Làm giàu kho tri thức</div><div class="desc">Mở rộng phạm vi tra cứu và trả lời câu hỏi.</div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Độ phủ nền tảng &amp; chỉ số kỹ thuật</h3>
+      <div class="cap">VER2 được mở rộng triển khai trên ba kênh tiếp cận</div>
+      <div class="plats">
+        <div class="plat"><div class="pi">W</div><div class="pn">Website HVNH</div><div class="pstat">Đã triển khai</div></div>
+        <div class="plat"><div class="pi">O</div><div class="pn">Cổng Onegate</div><div class="pstat">Đã triển khai</div></div>
+        <div class="plat"><div class="pi">A</div><div class="pn">App di động</div><div class="pstat">Đã triển khai</div></div>
+      </div>
+      <div style="margin-top:18px">
+        <div class="gauge-row" id="pl4Gauge"></div>
+      </div>
+      <div class="callout">Điểm phụ thuộc cần quản trị rủi ro: tiến độ gắn chặt với <b>đối tác Misa</b>; cần lộ trình tự chủ về tri thức và vận hành.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PL5 ================= -->
+<section id="pl5">
+  <div class="sec-head reveal">
+    <div class="sec-num">06</div>
+    <div class="sec-tt"><h2>Phụ lục 5 — Nhiệm vụ trọng điểm chuyển đổi số 2026</h2><p>20 đầu mối · khoảng 40 nhiệm vụ con · trải rộng trên 16 đơn vị</p></div>
+  </div>
+  <div class="rule"></div>
+  <div class="grid g2 reveal">
+    <div class="panel">
+      <h3>Khối lượng nhiệm vụ theo đơn vị chủ trì</h3>
+      <div class="cap">Phân bổ đầu mối công việc giữa các đơn vị</div>
+      <div class="chart-box tall"><canvas id="pl5Unit"></canvas></div>
+    </div>
+    <div class="panel">
+      <h3>Áp lực tiến độ theo mốc thời hạn</h3>
+      <div class="cap">Số đầu mối nhiệm vụ phân theo thời hạn hoàn thành</div>
+      <div class="chart-box tall"><canvas id="pl5Time"></canvas></div>
+      <div class="callout"><b>Khoảng trống dữ liệu:</b> 40 nhiệm vụ chưa được đo lường tiến độ do nền tảng số đánh giá chưa hoàn thiện. Một số mốc thời hạn trong báo cáo còn ghi sai (ví dụ "3/3036"), cần chuẩn hóa.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= NHIỆM VỤ ĐẾN HẠN ================= -->
+<section id="denhan">
+  <div class="sec-head reveal">
+    <div class="sec-num">07</div>
+    <div class="sec-tt"><h2>Nhiệm vụ sắp đến hạn — Quý III/2026 (tháng 6, 7, 8)</h2><p>Nhắc các đơn vị hoàn thành đúng hạn và rà soát chỉ tiêu sáng chế / sáng kiến số</p></div>
+  </div>
+  <div class="rule"></div>
+
+  <div class="alert-box reveal">
+    <div class="alert-tag">Rà soát chỉ tiêu · Sáng chế &amp; Sáng kiến số</div>
+    <div class="alert-body">Chiếu theo mục tiêu Nghị quyết 57 (số đơn đăng ký tăng bình quân <b>16–18%/năm</b>; tỷ lệ khai thác thương mại <b>8–10%</b> đến năm 2030), kết quả hiện tại mới có <b>01 đơn đăng ký</b>, <b>01 bằng sáng chế SHTT</b> và <b>0 khai thác thương mại</b> — <b class="neg">CHƯA đạt chỉ tiêu tăng trưởng</b>. Đề nghị các đơn vị dồn lực 6 tháng cuối năm: rà soát kết quả nghiên cứu khoa học có tiềm năng bảo hộ, lập thêm hồ sơ đăng ký, thúc đẩy sáng kiến số tại từng đơn vị.</div>
+  </div>
+
+  <div class="grid g3 reveal" style="margin-top:20px">
+    <div class="rcard">
+      <span class="pri">6</span>
+      <h4>Đến hạn trong tháng 6/2026</h4>
+      <div class="own">Mức độ: <b>Cấp thiết — đến hạn</b></div>
+      <ul>
+        <li>Tối thiểu 02 sản phẩm truyền thông "Bình dân học vụ số" năm 2026 <span class="deadline-flag">Hạn 30/6</span> <span class="ow">· Phòng TCCB, TVTS &amp; PTTH</span></li>
+        <li>Phòng truyền thống ảo, lịch thông minh, sơ đồ chỉ dẫn số <span class="deadline-flag">Hạn 6/2026</span> <span class="ow">· Văn phòng</span></li>
+        <li>Trình ký dự thảo Quy định Quỹ đầu tư mạo hiểm (nhiệm vụ tồn 2.1) <span class="ow">· Phòng TC-KT, Pháp chế</span></li>
+        <li>Xử lý dứt điểm các nhiệm vụ PL5 đã quá hạn 2–4/2026 <span class="ow">· các đơn vị liên quan</span></li>
+      </ul>
+    </div>
+    <div class="rcard">
+      <span class="pri">7</span>
+      <h4>Tháng 7/2026 — chuẩn bị &amp; sơ kết</h4>
+      <div class="own">Mức độ: <b>Đẩy mạnh — chuẩn bị về đích</b></div>
+      <ul>
+        <li>Đưa AI Chatbot VER2 vào vận hành chính thức trên 3 nền tảng <span class="ow">· VNC, Phòng CNTT</span></li>
+        <li>Phát triển cấu phần kỹ thuật Trợ lý ảo NLP, chuẩn bị cho mốc 30/9 <span class="ow">· VNC, Khoa CNTT &amp; KTS</span></li>
+        <li>Sơ kết 6 tháng: rà soát toàn bộ chỉ tiêu, chốt danh mục cần tăng tốc <span class="ow">· Ban chỉ đạo</span></li>
+        <li>Lập hồ sơ đăng ký sáng chế / sáng kiến số mới (đợt 1) <span class="ow">· VNC, các Khoa</span></li>
+      </ul>
+    </div>
+    <div class="rcard">
+      <span class="pri">8</span>
+      <h4>Tháng 8/2026 — tăng tốc về đích</h4>
+      <div class="own">Mức độ: <b>Tăng tốc nửa cuối năm</b></div>
+      <ul>
+        <li>Hoàn thiện &amp; vận hành nền tảng đo lường CĐS để mở dữ liệu 40 nhiệm vụ PL5 <span class="ow">· Phòng CNTT</span></li>
+        <li>Hoàn tất thử nghiệm, chuẩn bị nghiệm thu Trợ lý ảo trước hạn 30/9 <span class="ow">· VNC</span></li>
+        <li>Hình thành mạng lưới "Đại sứ số / Hạt nhân số" cấp đơn vị <span class="ow">· Phòng TCCB</span></li>
+        <li>Tiếp tục nộp hồ sơ đăng ký SHTT, hướng tới mục tiêu tăng trưởng NQ 57 <span class="ow">· VNC, các Khoa</span></li>
+      </ul>
+    </div>
+  </div>
+  <p class="footnote reveal">Ghi chú: Các mốc tháng 7–8 được suy ra từ yêu cầu chuẩn bị cho hạn 30/9/2026 (Trợ lý ảo NLP) và định hướng tăng tốc nửa cuối năm; báo cáo gốc tháng 05/2026 chưa ấn định mốc thời hạn cứng cho hai tháng này.</p>
+</section>
+
+<!-- ================= LỘ TRÌNH ================= -->
+<section id="lotrinh">
+  <div class="sec-head reveal">
+    <div class="sec-num">08</div>
+    <div class="sec-tt"><h2>Lộ trình tối ưu cho tháng 06/2026</h2><p>Sáu ưu tiên hành động, sắp xếp theo mức độ tác động và tính cấp thiết</p></div>
+  </div>
+  <div class="rule"></div>
+  <div class="road reveal">
+    <div class="rcard">
+      <span class="pri">01</span>
+      <h4>Đưa nền tảng đo lường CĐS vào vận hành</h4>
+      <div class="own">Chủ trì: <b>Phòng CNTT</b> · Phối hợp: VNC</div>
+      <ul>
+        <li>Hoàn thiện tích hợp bộ tiêu chí trên phần mềm QLKHCN</li>
+        <li>Mở thu thập dữ liệu tiến độ cho 40 nhiệm vụ PL5</li>
+        <li>Phát hành báo cáo tiến độ PL5 lần đầu</li>
+      </ul>
+    </div>
+    <div class="rcard">
+      <span class="pri">02</span>
+      <h4>Dứt điểm Quy định Quỹ đầu tư mạo hiểm</h4>
+      <div class="own">Chủ trì: <b>Phòng TC-KT</b> · Phối hợp: Thanh tra – Pháp chế, VNC</div>
+      <ul>
+        <li>Họp xử lý các điểm vướng pháp chế</li>
+        <li>Hoàn thiện và trình ký dự thảo trong tháng</li>
+        <li>Nâng tỷ lệ NQ 114 vượt mốc 90%</li>
+      </ul>
+    </div>
+    <div class="rcard">
+      <span class="pri">03</span>
+      <h4>Hoàn thành mốc Bình dân học vụ số <span class="deadline-flag">Hạn 30/6</span></h4>
+      <div class="own">Chủ trì: <b>Phòng TCCB · TVTS &amp; PTTH</b></div>
+      <ul>
+        <li>Bảo đảm tối thiểu 02 sản phẩm truyền thông năm 2026 lên cổng NHNN/TBNH</li>
+        <li>Ban hành danh sách Đại sứ số cấp đơn vị</li>
+        <li>Khởi động cấu phần kỹ thuật Trợ lý ảo</li>
+      </ul>
+    </div>
+    <div class="rcard">
+      <span class="pri">04</span>
+      <h4>Đưa AI Chatbot VER2 vận hành chính thức</h4>
+      <div class="own">Chủ trì: <b>VNC</b> · Phối hợp: Phòng CNTT, Misa</div>
+      <ul>
+        <li>Nghiệm thu VER2 với mốc chất lượng cụ thể</li>
+        <li>Làm giàu kho tri thức, mở rộng tra cứu</li>
+        <li>Thiết lập chỉ số chất lượng theo dõi định kỳ</li>
+      </ul>
+    </div>
+    <div class="rcard">
+      <span class="pri">05</span>
+      <h4>Tăng tốc danh mục sáng chế &amp; SHTT</h4>
+      <div class="own">Chủ trì: <b>VNC</b> · Phối hợp: các Khoa, Bộ môn</div>
+      <ul>
+        <li>Rà soát kết quả NCKH có tiềm năng bảo hộ</li>
+        <li>Lập ít nhất 01 hồ sơ đăng ký mới</li>
+        <li>Phác thảo quy trình hỗ trợ thương mại hóa</li>
+      </ul>
+    </div>
+    <div class="rcard">
+      <span class="pri">06</span>
+      <h4>Về đích các nhiệm vụ CĐS hạn tháng 6 <span class="deadline-flag">Hạn 6/2026</span></h4>
+      <div class="own">Chủ trì: <b>Văn phòng</b> · Phối hợp: Khoa CNTT &amp; KTS, TVTS</div>
+      <ul>
+        <li>Hoàn thành phòng truyền thống ảo, lịch thông minh, sơ đồ chỉ dẫn</li>
+        <li>Rà soát các mốc 2–4/2026 bị trễ, chuẩn hóa lại danh mục</li>
+        <li>Bổ sung đơn vị phối hợp cho các nhiệm vụ còn thiếu</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>Nguồn: <b>Báo cáo số 06/BC-BCĐ ngày 28/5/2026</b> · Ban chỉ đạo phát triển KHCN, ĐMST &amp; CĐS — Học viện Ngân hàng</div>
+    <div>Bảng theo dõi trực quan · Kỳ tháng 05/2026</div>
+  </div>
+</footer>
+
+<script>
+const NAVY='#282a73', NAVY_SOFT='#3a3d8f', ORANGE='#faa61a', CORAL='#D85A30', GREY='#c9c6d6', MUTED='#6b6e85', LINE='#e2ddd0';
+
+/* ---------- GAUGE RENDERER (SVG) ---------- */
+function gauge(el, value, label, sub, color){
+  const r=52, c=2*Math.PI*r, off=c*(1-value/100);
+  const wrap=document.createElement('div'); wrap.className='gauge';
+  wrap.innerHTML=`
+    <svg viewBox="0 0 140 140">
+      <circle cx="70" cy="70" r="${r}" fill="none" stroke="${LINE}" stroke-width="13"/>
+      <circle cx="70" cy="70" r="${r}" fill="none" stroke="${color}" stroke-width="13"
+        stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c}"
+        transform="rotate(-90 70 70)" class="arc"/>
+      <text x="70" y="74" text-anchor="middle" class="pct">${value.toLocaleString('vi-VN')}%</text>
+    </svg>
+    <div class="glab">${label}</div><div class="gsub">${sub}</div>`;
+  el.appendChild(wrap);
+  const arc=wrap.querySelector('.arc');
+  setTimeout(()=>{arc.style.transition='stroke-dashoffset 1.3s cubic-bezier(.22,1,.36,1)';arc.style.strokeDashoffset=off;},150);
+}
+
+/* ---------- CHART DEFAULTS ---------- */
+Chart.defaults.font.family="'Be Vietnam Pro',sans-serif";
+Chart.defaults.font.size=12;
+Chart.defaults.color=MUTED;
+Chart.defaults.plugins.legend.labels.usePointStyle=true;
+Chart.defaults.plugins.legend.labels.boxWidth=8;
+Chart.defaults.plugins.legend.labels.padding=14;
+
+function init(){
+  /* Overview gauges */
+  gauge(document.getElementById('overviewGauges'),85,'Nghị quyết 114','17/20 nhiệm vụ',NAVY);
+  gauge(document.getElementById('overviewGauges'),88.88,'Bình dân học vụ số','16/18 nhiệm vụ',ORANGE);
+
+  /* Overview trend */
+  new Chart(ovTrend,{type:'line',data:{labels:['Tháng 04/2026','Tháng 05/2026'],
+    datasets:[
+      {label:'Nghị quyết 114',data:[80,85],borderColor:NAVY,backgroundColor:'rgba(40,42,115,.08)',tension:.3,fill:true,borderWidth:3,pointRadius:5,pointBackgroundColor:NAVY},
+      {label:'Bình dân học vụ số',data:[88.88,88.88],borderColor:ORANGE,backgroundColor:'rgba(250,166,26,.10)',tension:.3,fill:true,borderWidth:3,pointRadius:5,pointBackgroundColor:ORANGE}
+    ]},
+    options:{maintainAspectRatio:false,scales:{y:{min:70,max:100,ticks:{callback:v=>v+'%'},grid:{color:LINE}},x:{grid:{display:false}}},plugins:{legend:{position:'bottom'}}}});
+
+  /* PL1 */
+  gauge(document.getElementById('pl1Gauge'),85,'Hoàn thành','Kỳ tháng 05/2026',NAVY);
+  new Chart(pl1Donut,{type:'doughnut',data:{labels:['Đã hoàn thành','Chưa hoàn thành'],
+    datasets:[{data:[17,3],backgroundColor:[NAVY,GREY],borderWidth:0}]},
+    options:{maintainAspectRatio:false,cutout:'66%',plugins:{legend:{position:'bottom'}}}});
+  new Chart(pl1Trend,{type:'line',data:{labels:['T04/2026','T05/2026'],
+    datasets:[{data:[80,85],borderColor:ORANGE,backgroundColor:'rgba(250,166,26,.12)',fill:true,tension:.3,borderWidth:3,pointRadius:5,pointBackgroundColor:ORANGE}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:70,max:100,ticks:{callback:v=>v+'%'},grid:{color:LINE}},x:{grid:{display:false}}}}});
+  new Chart(pl1Stack,{type:'bar',data:{
+    labels:['I. Nhận thức','II. Quy chế','III. Hạ tầng','IV. Nhân lực','V. CĐS & AI'],
+    datasets:[
+      {label:'Đạt',data:[1,1,2,1,2],backgroundColor:NAVY,borderRadius:5,stack:'s'},
+      {label:'Đang triển khai',data:[0,0,0,0,1],backgroundColor:ORANGE,borderRadius:5,stack:'s'},
+      {label:'Chưa đạt',data:[0,1,0,0,0],backgroundColor:CORAL,borderRadius:5,stack:'s'}
+    ]},
+    options:{maintainAspectRatio:false,scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,ticks:{stepSize:1},grid:{color:LINE}}},plugins:{legend:{position:'bottom'}}}});
+
+  /* PL2 */
+  gauge(document.getElementById('pl2Gauge'),88.88,'Hoàn thành','Kỳ tháng 05/2026',ORANGE);
+  new Chart(pl2Donut,{type:'doughnut',data:{labels:['Đã hoàn thành','Chưa hoàn thành'],
+    datasets:[{data:[16,2],backgroundColor:[ORANGE,GREY],borderWidth:0}]},
+    options:{maintainAspectRatio:false,cutout:'66%',plugins:{legend:{position:'bottom'}}}});
+  new Chart(pl2Trend,{type:'line',data:{labels:['T04/2026','T05/2026'],
+    datasets:[{data:[88.88,88.88],borderColor:CORAL,backgroundColor:'rgba(216,90,48,.10)',fill:true,tension:.2,borderWidth:3,pointRadius:5,pointBackgroundColor:CORAL}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:70,max:100,ticks:{callback:v=>v+'%'},grid:{color:LINE}},x:{grid:{display:false}}}}});
+  new Chart(pl2Bar,{type:'bar',data:{
+    labels:['I. Chỉ tiêu cụ thể','II. Truyền thông','III. Quy định','V. Nền tảng','VI. Phổ cập'],
+    datasets:[{label:'Số nhiệm vụ',data:[1,9,2,2,2],backgroundColor:NAVY,borderRadius:5}]},
+    options:{maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{grid:{color:LINE},ticks:{stepSize:2}},y:{grid:{display:false}}}}});
+
+  /* PL3 funnel */
+  new Chart(pl3Funnel,{type:'bar',data:{
+    labels:['Đơn đã nộp','Chấp nhận hợp lệ','Đã thẩm định nội dung','Được cấp văn bằng','Khai thác thương mại'],
+    datasets:[{label:'Số lượng',data:[1,0,0,0,0],backgroundColor:[NAVY,NAVY_SOFT,GREY,GREY,CORAL],borderRadius:5}]},
+    options:{maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.x+' (mục tiêu NQ57: tăng 16–18%/năm)'}}},scales:{x:{grid:{color:LINE},ticks:{stepSize:1},suggestedMax:2},y:{grid:{display:false}}}}});
+
+  /* PL4 maturity gauge (VER1 recorded accuracy) */
+  gauge(document.getElementById('pl4Gauge'),70,'Độ chính xác VER1','VER2 đang cải thiện',NAVY);
+
+  /* PL5 by unit */
+  new Chart(pl5Unit,{type:'bar',data:{
+    labels:['Văn phòng','Phòng TCCB','Phòng CTSV','Phòng CNTT','Phòng Đào tạo','Phòng Quản trị','TC-KT','VNC','Khoa CNTT&KTS','Khác (8 đơn vị)'],
+    datasets:[{label:'Số đầu mối nhiệm vụ',data:[3,2,2,1,1,1,1,1,1,8],backgroundColor:(c)=>c.dataIndex===0?ORANGE:NAVY,borderRadius:5}]},
+    options:{maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{grid:{color:LINE},ticks:{stepSize:1}},y:{grid:{display:false}}}}});
+
+  /* PL5 by deadline */
+  new Chart(pl5Time,{type:'bar',data:{
+    labels:['Tháng 2/2026','Tháng 3/2026','Tháng 4/2026','Tháng 6/2026','Thường xuyên / 2026'],
+    datasets:[{label:'Số đầu mối nhiệm vụ',data:[2,5,3,1,9],backgroundColor:[CORAL,CORAL,ORANGE,ORANGE,GREY],borderRadius:5}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{grid:{color:LINE},ticks:{stepSize:2}},x:{grid:{display:false}}}}});
+
+  /* Báo cáo tổng hợp — cơ cấu nhiệm vụ */
+  new Chart(baocaoComp,{type:'bar',data:{
+    labels:['NQ 114','Bình dân học vụ số','CĐS trọng tâm 2026','Sáng chế (NQ 57)'],
+    datasets:[{label:'Số nhiệm vụ',data:[20,18,40,1],backgroundColor:[NAVY,ORANGE,CORAL,NAVY_SOFT],borderRadius:5}]},
+    options:{maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{grid:{color:LINE},ticks:{stepSize:10}},y:{grid:{display:false}}}}});
+}
+
+/* ---------- reveal on scroll ---------- */
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---------- nav active state ---------- */
+const links=[...document.querySelectorAll('nav.bar a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+window.addEventListener('scroll',()=>{
+  let idx=0;secs.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<160)idx=i;});
+  links.forEach(l=>l.classList.remove('active'));links[idx].classList.add('active');
+});
+
+if(window.Chart){init();}else{window.addEventListener('load',init);}
+</script>
+</body>
+</html>
